@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image search</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/task.css" />
+  </head>
+  <body class="body">
+    <main>
+      <div class="main-task">
+        <a class="nav" href="./index.html">← Go back</a>
+        <form class="form">
+          <label>
+            <input
+              type="text"
+              name="search-text"
+              placeholder="Search images..."
+              required
+            />
+          </label>
+          <button type="submit">Search</button>
+        </form>
+      </div>
+
+      <div class="images-wrapper">
+        <ul class="gallery">
+          <!-- <li class="gallery-item">
+            <a class="img-link" href=""
+              ><img
+                class="gall-img"
+                width="360px"
+                height="152px"
+                src="https://cdn.pixabay.com/photo/2013/10/15/09/12/flower-195893_150.jpg"
+                alt="blossom, bloom, flower"
+              />
+              <div class="stats-wrapper">
+                <ul class="stats-list">
+                  <li class="stats-item">
+                    Likes <br /><span class="stats-number">50</span>
+                  </li>
+                  <li class="stats-item">
+                    Views <br /><span class="stats-number">260</span>
+                  </li>
+                  <li class="stats-item">
+                    Comments <br /><span class="stats-number">80</span>
+                  </li>
+                  <li class="stats-item">
+                    Downloads <br /><span class="stats-number">350</span>
+                  </li>
+                </ul>
+              </div>
+            </a>
+          </li> -->
+        </ul>
+        <span class="loader">
+          <span>L</span><span>o</span><span>a</span><span>d</span><span>i</span><span>n</span><span>g</span><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+        </span>
+      </div>
+    </main>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
