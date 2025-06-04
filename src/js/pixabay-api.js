@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { showError } from './notifications';
 
 const BASE_URL = 'https://pixabay.com/api/';
@@ -18,13 +19,10 @@ export default async function getImagesByQuery(query, page = 1) {
   const url = `${BASE_URL}?${searchParams.toString()}`;
 
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('response.status');
-    }
-    return await response.json();
+    const response = await axios.get(url);
+    return response.data;
   } catch (error) {
-    showError('Error fetching images');
+    showError(`Error fetching images: ${error.message}`);
     throw error;
   }
 }

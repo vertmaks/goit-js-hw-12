@@ -1,5 +1,6 @@
+import getImagesByQuery from './js/pixabay-api';
 import {
-  renderGallery,
+  createGallery,
   clearGallery,
   showLoader,
   hideLoader,
@@ -13,7 +14,6 @@ const loadMoreBtn = document.querySelector('.load-more');
 
 let currentQuery = '';
 let currentPage = 1;
-let totalHits = 0;
 
 form.addEventListener('submit', handleFormSubmit);
 
@@ -42,3 +42,46 @@ loadMoreBtn.addEventListener('click', async () => {
   currentPage += 1;
   await renderGallery(currentQuery, currentPage);
 });
+
+async function renderGallery(query, page) {
+  showLoader();
+
+  try {
+    const data = await getImagesByQuery(query, page);
+
+    if (!data.hits.length) {
+      showError(
+        'Sorry, there are no images matching your search query. Please try again!'
+      );
+      hideLoadMoreButton();
+      gallery.innerHTML = '';
+      return;
+    }
+
+    createGallery(data.hits);
+
+    const totalPages = Math.ceil(data.totalHits / 15);
+
+    if (page >= totalPages) {
+      hideLoadMoreButton();
+      showError("We're sorry, but you've reached the end of search results.");
+    } else {
+      showLoadMoreButton();
+    }
+
+    if (page > 1) {
+      const cardHeight = document
+        .querySelector('.gallery-item')
+        .getBoundingClientRect().height;
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    showError('An error occurred while loading images.');
+  } finally {
+    hideLoader();
+  }
+}
