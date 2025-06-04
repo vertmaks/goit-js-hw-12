@@ -2,7 +2,7 @@ import { showError } from './notifications';
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '50658945-6d505dd3b22d0da0b5135219d';
-const PER_PAGE = 15;
+const PER_PAGE = 16;
 
 export default async function getImagesByQuery(query, page = 1) {
   const searchParams = new URLSearchParams({
