@@ -182,3 +182,11 @@ button:focus {
     opacity: 1;
   }
 }
+
+.load-more {
+  color: #fff;
+  margin: 0 auto;
+  display: none;
+  width: 135px;
+  margin-top: 35px;
+}

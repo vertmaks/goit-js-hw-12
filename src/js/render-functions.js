@@ -5,6 +5,12 @@ import { showError } from './notifications';
 
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
+const loadMoreBtn = document.querySelector('.load-more');
+
+let lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
 export function createGallery(images) {
   const markup = images
@@ -37,39 +43,51 @@ export function createGallery(images) {
     )
     .join('');
 
-  gallery.innerHTML = markup;
+  gallery.innerHTML += markup;
 
-  new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
+  lightbox.refresh();
 }
 
-export function renderGallery(query) {
-  clearGallery();
+export async function renderGallery(query, page) {
   showLoader();
 
-  getImagesByQuery(query)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      return response.json();
-    })
-    .then(images => {
-      if (!images.hits.length) {
-        showError(
-          'Sorry, there are no images matching your search query. Please try again!'
-        );
-        gallery.innerHTML = '';
-        return;
-      }
-      createGallery(images.hits);
-    })
-    .catch(error => console.log(error))
-    .finally(() => {
-      hideLoader();
-    });
+  try {
+    const data = await getImagesByQuery(query, page);
+
+    if (!data.hits.length) {
+      showError(
+        'Sorry, there are no images matching your search query. Please try again!'
+      );
+      hideLoadMoreButton();
+      gallery.innerHTML = '';
+      return;
+    }
+
+    createGallery(data.hits);
+
+    const totalPages = Math.ceil(data.totalHits / 15);
+
+    if (page >= totalPages) {
+      hideLoadMoreButton();
+      showError("We're sorry, but you've reached the end of search results.");
+    } else {
+      showLoadMoreButton();
+    }
+
+    if (page > 1) {
+      const cardHeight = document
+        .querySelector('.gallery-item')
+        .getBoundingClientRect().height;
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    hideLoader();
+  }
 }
 
 export function clearGallery() {
@@ -83,4 +101,12 @@ export function showLoader() {
 
 export function hideLoader() {
   loader.style.display = 'none';
+}
+
+export function showLoadMoreButton() {
+  loadMoreBtn.style.display = 'block';
+}
+
+export function hideLoadMoreButton() {
+  loadMoreBtn.style.display = 'none';
 }

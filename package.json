@@ -1,11 +1,11 @@
 {
-  "name": "goit-js-hw-11",
+  "name": "goit-js-hw-12",
   "private": true,
   "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite --open",
-    "build": "vite build --base=/goit-js-hw-11/",
+    "build": "vite build --base=/goit-js-hw-12/",
     "preview": "vite preview --open"
   },
   "devDependencies": {
@@ -19,7 +19,7 @@
   "main": "vite.config.js",
   "repository": {
     "type": "git",
-    "url": "goit-js-hw-11"
+    "url": "goit-js-hw-12"
   },
   "keywords": [
     "http",
